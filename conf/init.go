@@ -19,13 +19,12 @@ import (
 	"github.com/eliona-smart-building-assistant/go-utils/db"
 )
 
-// InitConfiguration initialize the configuration of the app
+// InitConfiguration initialize the configuration of the app.
+// This should be made editable by eliona frontend.
 func InitConfiguration(connection db.Connection) error {
-
-	//
-	// Todo: do anything which is necessary to initialize the app like creating text data to demonstrate the configuration
-	//
-
+	err := Set(connection, "endpoint", "https://api.coindesk.com/v1/bpi/currentprice.json")
+	if err != nil {
+		return err
+	}
 	return nil
-
 }

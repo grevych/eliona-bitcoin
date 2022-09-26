@@ -15,11 +15,21 @@
 
 package main
 
-// doAnything is the main app function which is called periodically
-func doAnything() {
+import (
+	"bitcoin/apiserver"
+	"bitcoin/apiservice"
+	"net/http"
 
-	//
-	// Todo: implement everything the app should do
-	//
+	"github.com/eliona-smart-building-assistant/go-utils/common"
 
+	"github.com/eliona-smart-building-assistant/go-utils/log"
+)
+
+// listenApiRequests starts an API server and listen for API requests
+func listenApiRequests() {
+	port := ":" + common.Getenv("BITCOIN_INTEGRATION_PORT", "3001")
+	err := http.ListenAndServe(port, apiserver.NewRouter(
+		apiserver.NewApiController(apiservice.NewApiService()),
+	))
+	log.Fatal("Bitcoin", "Error in API Server: %v", err)
 }
