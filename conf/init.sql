@@ -13,8 +13,25 @@
 --  DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 --  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-create schema if not exists template;
+-- Creates a schema named like the app within the eliona init.
+-- All persistent and configurable data needed by the app should be located in this schema.
+create schema if not exists bitcoin;
 
---
--- Todo: create tables and database objects necessary for this app like tables persisting configuration
---
+-- Committing schema creation because this cannot be wrapped inside transactions
+commit;
+
+-- Create a table for global configuration like endpoints, secrets and so on.
+-- This table should be made editable by eliona frontend.
+create table if not exists bitcoin.configuration
+(
+    name text primary key,
+    value text not null
+);
+
+-- Create a table to map currencies with eliona assets.
+-- This table should be made editable by eliona frontend.
+create table if not exists bitcoin.currencies
+(
+    code text not null,
+    description text not null
+);

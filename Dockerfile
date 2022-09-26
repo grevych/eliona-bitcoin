@@ -26,7 +26,14 @@ FROM alpine:3.15 AS target
 COPY --from=build /app ./
 COPY conf/*.sql ./conf/
 
-ENV APPNAME=template
-
+ENV APPNAME=bitcoin
+ENV API_TOKEN=secret
+ENV BITCOIN_INTEGRATION_PORT=3001
+ENV API_ENDPOINT=http://localhost:3000/v2
+ENV CONNECTION_STRING=postgres://postgres:secret@localhost:5432
+ENV LOG_LEVEL=debug
 ENV TZ=Europe/Zurich
+
+EXPOSE 3001/tcp
+
 CMD [ "/app" ]
